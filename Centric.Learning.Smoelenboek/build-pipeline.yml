@@ -1,0 +1,24 @@
+name: $(date:yyyy).$(date:MM).$(date:dd)$(Rev:.r)
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  solution: '**/*.sln'
+  system.debug: false
+
+steps:
+- task: DotNetCoreCLI@2
+  displayName: 'Build'
+  inputs:
+    command: 'publish'
+    projects: '$(solution)'
+    arguments: '--output $(Build.ArtifactStagingDirectory) /p:Version=$(Build.BuildNumber) /p:AssemblyVersion=$(Build.BuildNumber)'
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
