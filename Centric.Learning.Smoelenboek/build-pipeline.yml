@@ -12,12 +12,18 @@ variables:
 
 steps:
 - task: DotNetCoreCLI@2
-  displayName: 'Build'
+  displayName: 'Build Application and publish to artifact staging directory'
   inputs:
     command: 'publish'
     projects: '$(solution)'
     arguments: '--output $(Build.ArtifactStagingDirectory) /p:Version=$(Build.BuildNumber) /p:AssemblyVersion=$(Build.BuildNumber)'
+- task: CopyFiles@2
+  displayName: 'Copy ARM template to artifact staging directory'
+  inputs:
+    Contents: 'deploy.json'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
 - task: PublishBuildArtifacts@1
+  displayName: 'Pubish artifact staging to artifacts store'
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
