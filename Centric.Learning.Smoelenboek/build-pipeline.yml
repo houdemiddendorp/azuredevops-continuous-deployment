@@ -1,29 +1,42 @@
+# the name of the build, avilable in the variable $(Build.BuildNumber)
+# will be like "yyyy.mm.dd.revision"
 name: $(date:yyyy).$(date:MM).$(date:dd)$(Rev:.r)
 
+# the pipeline will automatically start when the master branch is changed
+# i.e. when a pull request is done to the master branch
 trigger:
 - master
 
+# the pipeline will run on a hosted Linux machine
 pool:
   vmImage: 'ubuntu-latest'
 
+# the variable $(solution) contains the name of the solution to be build (wildcard)
 variables:
   solution: '**/*.sln'
   system.debug: false
 
+# now the steps for the build
 steps:
+
+# first step: build the app! using dotnet and publish to artifact staging
 - task: DotNetCoreCLI@2
   displayName: 'Build Application and publish to artifact staging directory'
   inputs:
     command: 'publish'
     projects: '$(solution)'
     arguments: '--output $(Build.ArtifactStagingDirectory) /p:Version=$(Build.BuildNumber) /p:AssemblyVersion=$(Build.BuildNumber)'
+    
+# second step: copy the ARM template (is initially empty) to artifact staging
 - task: CopyFiles@2
   displayName: 'Copy ARM template to artifact staging directory'
   inputs:
     Contents: 'deploy.json'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    
+# last step: publish artifact staging to artifact store
 - task: PublishBuildArtifacts@1
-  displayName: 'Pubish artifact staging to artifacts store'
+  displayName: 'Pubish artifact staging to artifact store'
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
