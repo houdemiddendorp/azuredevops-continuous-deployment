@@ -1,21 +1,12 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
-    "parameters": {
-        "userNameBaseGuid": {
-            "type": "string",
-            "defaultValue": "[newGuid()]"
-        },
-        "passwordBaseGuid": {
-            "type": "string",
-            "defaultValue": "[newGuid()]"
-        }
-    },
+    "parameters": {},
     "functions": [],
     "variables": {
         "sqlServerName": "[concat('ss-', uniqueString(resourceGroup().id))]",
-        "sqlServerAdmin": "[concat('l', uniqueString(resourceGroup().id, parameters('userNameBaseGuid')))]",
-        "sqlServerAdminPwd": "[concat('P', uniqueString(resourceGroup().id, parameters('passwordBaseGuid')), 'x', '!')]",
+        "sqlServerAdmin": "[concat('l', uniqueString(resourceGroup().id, 'usrsecretinformation'))]",
+        "sqlServerAdminPwd": "[concat('P', uniqueString(resourceGroup().id, 'pwdsecretinformation'), 'x', '!')]",
         "sqlDatabaseName": "[concat('db-', uniqueString(resourceGroup().id))]",
         "storageAccountName": "[toLower(concat('sa', uniqueString(resourceGroup().id)))]",
         "appServicePlanName": "[concat('asp-', uniqueString(resourceGroup().id))]",
