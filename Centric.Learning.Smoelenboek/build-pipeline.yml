@@ -13,7 +13,7 @@ pool:
 
 # the variable $(solution) contains the name of the solution to be build (wildcard)
 variables:
-  solution: '**/*.sln'
+  solution: '**/Centric.Learning.Smoelenboek.csproj'
   system.debug: false
 
 # now the steps for the build
