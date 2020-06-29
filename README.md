@@ -1,4 +1,4 @@
-﻿# Azure DevOps - Continuous Deploym[Azure DevOps - Continuous Deployment](https://github.com/houdemiddendorp/azuredevops-continuous-deployment/blob/master/Azure%20DevOps%20-%20Continuous%20Deployment.pdf)ent
+﻿# Azure DevOps - Continuous Deployment
 
 ## Introduction
 
@@ -14,4 +14,4 @@ First you have to setup your Azure Devops project. This is described in the foll
 
 The hands-on lab is described in the following document:
 
-Azure DevOps - Continuous Deployment
+[Azure DevOps - Continuous Deployment](https://github.com/houdemiddendorp/azuredevops-continuous-deployment/blob/master/Azure%20DevOps%20-%20Continuous%20Deployment.pdf)
